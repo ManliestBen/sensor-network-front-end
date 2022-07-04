@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar'
 import Signup from './pages/Signup/Signup'
@@ -9,15 +9,32 @@ import Devices from './pages/Devices/Devices'
 import AddDevice from './pages/AddDevice/AddDevice'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
 import * as authService from './services/authService'
+import * as deviceService from './services/deviceService'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
   const navigate = useNavigate()
-
+  const [devices, setDevices] = useState([])
   const handleLogout = () => {
     authService.logout()
     setUser(null)
     navigate('/')
+  }
+
+  useEffect(() => {
+    deviceService.getAllDevices()
+    .then(devices => {
+      setDevices(devices)
+    })
+  }, [])
+  
+
+  const handleAddDevice = (deviceData) => {
+    deviceService.addDevice(deviceData)
+    .then(addedDevice => {
+      setDevices([...devices, addedDevice])
+      navigate('/devices')
+    })
   }
 
   const handleSignupOrLogin = () => {
@@ -47,7 +64,7 @@ const App = () => {
         />
         <Route
           path="/devices/new"
-          element={user ? <AddDevice /> : <Navigate to="/login" />}
+          element={user ? <AddDevice handleAddDevice={handleAddDevice} /> : <Navigate to="/login" />}
         />
         <Route
           path="/changePassword"
