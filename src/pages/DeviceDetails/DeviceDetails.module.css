@@ -15,3 +15,10 @@
   margin: 5px;
   padding: 5px;
 }
+
+.chart {
+  width: 95vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
