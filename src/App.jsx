@@ -23,11 +23,13 @@ const App = () => {
   }
 
   useEffect(() => {
-    deviceService.getAllDevices()
-    .then(devices => {
-      setDevices(devices)
-    })
-  }, [])
+    if (user) {
+      deviceService.getAllDevices()
+      .then(devices => {
+        setDevices(devices)
+      })
+    }
+  }, [user])
   
 
   const handleAddDevice = (deviceData) => {
