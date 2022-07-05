@@ -21,7 +21,15 @@ async function addDevice(deviceData) {
   return await res.json()
 }
 
+async function getDeviceData(deviceId) {
+  const res = await fetch(`${BASE_URL}/${deviceId}`, {
+    headers: { Authorization: `Bearer ${tokenService.getToken()}` },
+  })
+  return await res.json()
+}
+
 export { 
   getAllDevices,
-  addDevice
+  addDevice,
+  getDeviceData
 }

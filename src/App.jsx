@@ -10,6 +10,7 @@ import AddDevice from './pages/AddDevice/AddDevice'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
 import * as authService from './services/authService'
 import * as deviceService from './services/deviceService'
+import DeviceDetails from './pages/DeviceDetails/DeviceDetails'
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser())
@@ -65,6 +66,10 @@ const App = () => {
         <Route
           path="/devices/new"
           element={user ? <AddDevice handleAddDevice={handleAddDevice} /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/devices/:id"
+          element={user ? <DeviceDetails handleAddDevice={handleAddDevice} /> : <Navigate to="/login" />}
         />
         <Route
           path="/changePassword"
